@@ -3,6 +3,7 @@ services:
     image: portainer/portainer-ce:2.21.4
     container_name: portainer
     restart: always
+    command: --host=unix:///var/run/docker.sock
     networks:
       - pi-server
     ports:
