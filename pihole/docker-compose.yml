@@ -2,16 +2,33 @@ version: '3.8'
 
 services:
   pihole:
+    image: pihole/pihole:2024.07.0
     container_name: pihole
-    image: pihole/pihole:latest
     restart: unless-stopped
+    networks:
+      - pi-server
     ports:
       - "53:53/tcp"
       - "53:53/udp"
-      - "80:80/tcp"
+      - "8080:80/tcp"  # Web interface on 8080 to avoid conflicts
     environment:
       TZ: '${TIMEZONE}'
       WEBPASSWORD: '${PIHOLE_PASSWORD}'
     volumes:
       - ./etc-pihole:/etc/pihole
       - ./etc-dnsmasq.d:/etc/dnsmasq.d
+    cap_add:
+      - NET_ADMIN
+    healthcheck:
+      test: ["CMD", "dig", "@127.0.0.1", "pi.hole"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+
+networks:
+  pi-server:
+    external: true

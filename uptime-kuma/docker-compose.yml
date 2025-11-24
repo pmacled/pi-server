@@ -2,13 +2,28 @@ version: '3.8'
 
 services:
   uptime-kuma:
-    image: louislam/uptime-kuma:1
+    image: louislam/uptime-kuma:1.23.15
     container_name: uptime-kuma
     restart: always
+    networks:
+      - pi-server
     ports:
       - "3001:3001"
     volumes:
       - uptime-kuma_data:/app/data
+    healthcheck:
+      test: ["CMD", "node", "extra/healthcheck.js"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 256M
 
 volumes:
   uptime-kuma_data:
+
+networks:
+  pi-server:
+    external: true
