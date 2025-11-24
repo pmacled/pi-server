@@ -3,16 +3,12 @@ services:
     image: portainer/portainer-ce:latest
     container_name: portainer
     restart: always
-    command: --host=unix:///var/run/docker.sock
     networks:
       - pi-server
     ports:
       - "9000:9000"
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
       - portainer_data:/data
-    environment:
-      - DOCKER_HOST=unix:///var/run/docker.sock
     healthcheck:
       test: ["CMD", "/portainer", "--help"]
       interval: 30s
@@ -23,6 +19,35 @@ services:
       - "project=pi-server"
       - "service=portainer"
       - "description=Docker container management UI"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    depends_on:
+      - portainer-agent
+
+  portainer-agent:
+    image: portainer/agent:latest
+    container_name: portainer_agent
+    restart: always
+    networks:
+      - pi-server
+    ports:
+      - "9001:9001"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/lib/docker/volumes:/var/lib/docker/volumes
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:9001"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    labels:
+      - "project=pi-server"
+      - "service=portainer-agent"
+      - "description=Portainer Agent for Docker management"
     logging:
       driver: "json-file"
       options:
