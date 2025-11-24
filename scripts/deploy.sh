@@ -27,17 +27,17 @@ docker network create pi-server 2>/dev/null || echo "✅ Network 'pi-server' alr
 echo ""
 echo "🐳 Deploying Portainer..."
 cd portainer
-docker compose up -d
+docker compose --env-file ../.env up -d
 cd ..
 
 echo "🛡️  Deploying Pi-hole..."
 cd pihole
-docker compose up -d
+docker compose --env-file ../.env up -d
 cd ..
 
 echo "📊 Deploying Uptime Kuma..."
 cd uptime-kuma
-docker compose up -d
+docker compose --env-file ../.env up -d
 cd ..
 
 # Wait for services to start
