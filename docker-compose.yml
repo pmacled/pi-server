@@ -1,5 +1,0 @@
-# Shared network for all services
-networks:
-  pi-server:
-    name: pi-server
-    driver: bridge

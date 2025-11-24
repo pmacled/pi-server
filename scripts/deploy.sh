@@ -21,7 +21,7 @@ fi
 
 # Create shared network
 echo "📡 Creating shared network..."
-docker compose up -d
+docker network create pi-server 2>/dev/null || echo "✅ Network 'pi-server' already exists"
 
 # Deploy services in order
 echo ""
