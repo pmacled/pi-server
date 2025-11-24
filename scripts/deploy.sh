@@ -26,13 +26,19 @@ docker network create pi-server 2>/dev/null || echo "✅ Network 'pi-server' alr
 # Deploy services in order
 echo ""
 echo "🐳 Deploying Portainer..."
-cd portainer && docker compose up -d && cd ..
+cd portainer
+docker compose up -d
+cd ..
 
 echo "🛡️  Deploying Pi-hole..."
-cd pihole && docker compose up -d && cd ..
+cd pihole
+docker compose up -d
+cd ..
 
 echo "📊 Deploying Uptime Kuma..."
-cd uptime-kuma && docker compose up -d && cd ..
+cd uptime-kuma
+docker compose up -d
+cd ..
 
 # Wait for services to start
 echo ""
