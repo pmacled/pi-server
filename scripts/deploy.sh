@@ -40,6 +40,11 @@ cd uptime-kuma
 docker compose --env-file ../.env up -d
 cd ..
 
+echo "🎬 Deploying Jellyfin..."
+cd jellyfin
+docker compose --env-file ../.env up -d
+cd ..
+
 # Wait for services to start
 echo ""
 echo "⏳ Waiting for services to become healthy..."
@@ -48,7 +53,7 @@ sleep 15
 # Show status
 echo ""
 echo "📋 Service Status:"
-docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}" | grep -E "NAMES|portainer|pihole|uptime-kuma"
+docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}" | grep -E "NAMES|portainer|pihole|uptime-kuma|jellyfin"
 
 # Get IP address
 PI_IP=$(hostname -I | awk '{print $1}')
@@ -60,6 +65,7 @@ echo "🌐 Access your services:"
 echo "   Portainer:    http://$PI_IP:9000"
 echo "   Pi-hole:      http://$PI_IP:8080/admin"
 echo "   Uptime Kuma:  http://$PI_IP:3001"
+echo "   Jellyfin:     http://$PI_IP:8096"
 echo ""
 echo "⚙️  Next steps:"
 echo "   1. Configure Portainer admin account"

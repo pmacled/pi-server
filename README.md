@@ -25,6 +25,7 @@ nano .env  # Set TIMEZONE and generate PIHOLE_PASSWORD
 | Portainer | `http://PI_IP:9000` | Docker container management |
 | Pi-hole | `http://PI_IP:8080/admin` | Network-wide ad blocking |
 | Uptime Kuma | `http://PI_IP:3001` | Service monitoring |
+| Jellyfin | `http://PI_IP:8096` | Media server for movies, TV shows, and music |
 
 ⚠️ **Note**: Pi-hole web interface is on port 8080 (not 80) to avoid conflicts. DNS still uses standard port 53.
 
@@ -50,6 +51,7 @@ nano .env  # Set TIMEZONE and generate PIHOLE_PASSWORD
 docker logs pihole
 docker logs portainer
 docker logs uptime-kuma
+docker logs jellyfin
 
 # Check service health
 docker ps --format "table {{.Names}}\t{{.Status}}"
@@ -73,6 +75,13 @@ docker ps --format "table {{.Names}}\t{{.Status}}"
 - **Image**: `louislam/uptime-kuma:1.23.15`
 - **Memory**: 256MB limit
 - **Data**: Stored in named volume `uptime-kuma_data`
+
+### Jellyfin
+- **Image**: `jellyfin/jellyfin:10.10.3`
+- **Memory**: 1GB limit
+- **Data**: Config and cache in named volumes
+- **Media**: Requires SSD mounted at `/mnt/media/`
+- **Hardware**: GPU transcoding enabled for Raspberry Pi
 
 ## Configuration
 
@@ -150,6 +159,8 @@ pi-server-config/
 │   └── docker-compose.yml      # Portainer service
 ├── uptime-kuma/
 │   └── docker-compose.yml      # Uptime Kuma service
+├── jellyfin/
+│   └── docker-compose.yml      # Jellyfin media server
 └── scripts/
     ├── setup.sh                 # Initial system setup
     ├── deploy.sh                # Deploy all services

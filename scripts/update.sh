@@ -7,6 +7,7 @@ echo "Updating Pi Server services..."
 cd portainer && docker compose --env-file ../.env pull && cd ..
 cd pihole && docker compose --env-file ../.env pull && cd ..
 cd uptime-kuma && docker compose --env-file ../.env pull && cd ..
+cd jellyfin && docker compose --env-file ../.env pull && cd ..
 
 # Restart with new images
 ./deploy.sh

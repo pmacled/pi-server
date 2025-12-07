@@ -1,0 +1,54 @@
+services:
+  jellyfin:
+    image: jellyfin/jellyfin:10.10.3
+    container_name: jellyfin
+    restart: unless-stopped
+    networks:
+      - pi-server
+    ports:
+      - "8096:8096"     # HTTP web UI
+      - "8920:8920"     # HTTPS web UI (optional)
+      - "7359:7359/udp" # Auto-discovery
+      - "1900:1900/udp" # DLNA discovery
+    environment:
+      - TZ=${TIMEZONE}
+      - JELLYFIN_PublishedServerUrl=http://jellyfin:8096
+    volumes:
+      - jellyfin_config:/config
+      - jellyfin_cache:/cache
+      # Media directories - requires SSD mounted at /mnt/media
+      - /mnt/media/movies:/media/movies:ro
+      - /mnt/media/tv:/media/tv:ro
+      - /mnt/media/music:/media/music:ro
+    devices:
+      # Enable GPU hardware acceleration for Raspberry Pi
+      - /dev/dri:/dev/dri
+    group_add:
+      - "44"  # video group for GPU access
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8096/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    labels:
+      - "project=pi-server"
+      - "service=jellyfin"
+      - "description=Free media server for movies, TV shows, and music"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  jellyfin_config:
+  jellyfin_cache:
+
+networks:
+  pi-server:
+    external: true
