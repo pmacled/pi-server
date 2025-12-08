@@ -26,6 +26,7 @@ nano .env  # Set TIMEZONE and generate PIHOLE_PASSWORD
 | Pi-hole | `http://PI_IP:8080/admin` | Network-wide ad blocking |
 | Uptime Kuma | `http://PI_IP:3001` | Service monitoring |
 | Jellyfin | `http://PI_IP:8096` | Media server for movies, TV shows, and music |
+| Netdata | `http://PI_IP:19999` | Real-time performance and health monitoring |
 
 ⚠️ **Note**: Pi-hole web interface is on port 8080 (not 80) to avoid conflicts. DNS still uses standard port 53.
 
@@ -52,6 +53,7 @@ docker logs pihole
 docker logs portainer
 docker logs uptime-kuma
 docker logs jellyfin
+docker logs netdata
 
 # Check service health
 docker ps --format "table {{.Names}}\t{{.Status}}"
@@ -83,6 +85,14 @@ docker ps --format "table {{.Names}}\t{{.Status}}"
 - **Media**: Requires SSD mounted at `/mnt/media/`
 - **Hardware**: GPU transcoding enabled for Raspberry Pi
 
+### Netdata
+- **Image**: `netdata/netdata:v1.47.4`
+- **Memory**: No limit (minimal usage)
+- **Data**: Config, library, and cache in named volumes
+- **Monitoring**: Real-time system performance and health metrics
+- **Features**: Docker container monitoring, system metrics, alerts
+- **Cloud**: Optional Netdata Cloud integration with claim token
+
 ## Configuration
 
 ### Router DNS Setup
@@ -94,8 +104,16 @@ docker ps --format "table {{.Names}}\t{{.Status}}"
 Suggested monitors to add:
 - Pi-hole: `http://pihole:80` (internal network)
 - Portainer: `http://portainer:9000`
+- Netdata: `http://netdata:19999`
 - Router: `http://192.168.1.1` (adjust to your router IP)
 - Internet: `https://1.1.1.1`
+
+### Netdata Cloud (Optional)
+To connect your Netdata instance to Netdata Cloud:
+1. Sign up at https://app.netdata.cloud
+2. Add a new node and get your claim token
+3. Add `NETDATA_CLAIM_TOKEN` and `NETDATA_CLAIM_ROOMS` to your .env file
+4. Restart Netdata: `cd netdata && docker compose restart`
 
 ## Backup
 ```bash
@@ -161,6 +179,8 @@ pi-server-config/
 │   └── docker-compose.yml      # Uptime Kuma service
 ├── jellyfin/
 │   └── docker-compose.yml      # Jellyfin media server
+├── netdata/
+│   └── docker-compose.yml      # Netdata monitoring
 └── scripts/
     ├── setup.sh                 # Initial system setup
     ├── deploy.sh                # Deploy all services

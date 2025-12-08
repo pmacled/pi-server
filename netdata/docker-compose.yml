@@ -1,0 +1,55 @@
+services:
+  netdata:
+    image: netdata/netdata:v1.47.4
+    container_name: netdata
+    restart: unless-stopped
+    networks:
+      - pi-server
+    ports:
+      - "19999:19999"
+    environment:
+      - TZ=${TIMEZONE}
+      - NETDATA_CLAIM_TOKEN=${NETDATA_CLAIM_TOKEN:-}
+      - NETDATA_CLAIM_URL=https://app.netdata.cloud
+      - NETDATA_CLAIM_ROOMS=${NETDATA_CLAIM_ROOMS:-}
+    volumes:
+      # Netdata configuration
+      - netdata_config:/etc/netdata
+      - netdata_lib:/var/lib/netdata
+      - netdata_cache:/var/cache/netdata
+      # Host monitoring
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /etc/passwd:/host/etc/passwd:ro
+      - /etc/group:/host/etc/group:ro
+      - /etc/localtime:/etc/localtime:ro
+    cap_add:
+      - SYS_PTRACE
+      - SYS_ADMIN
+    security_opt:
+      - apparmor:unconfined
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:19999/api/v1/info"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    labels:
+      - "project=pi-server"
+      - "service=netdata"
+      - "description=Real-time performance and health monitoring"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  netdata_config:
+  netdata_lib:
+  netdata_cache:
+
+networks:
+  pi-server:
+    external: true
