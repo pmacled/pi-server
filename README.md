@@ -27,6 +27,7 @@ nano .env  # Set TIMEZONE and generate PIHOLE_PASSWORD
 | Uptime Kuma | `http://PI_IP:3001` | Service monitoring |
 | Jellyfin | `http://PI_IP:8096` | Media server for movies, TV shows, and music |
 | Netdata | `http://PI_IP:19999` | Real-time performance and health monitoring |
+| Home Assistant | `http://PI_IP:8123` | Smart home automation platform |
 
 ⚠️ **Note**: Pi-hole web interface is on port 8080 (not 80) to avoid conflicts. DNS still uses standard port 53.
 
@@ -54,6 +55,7 @@ docker logs portainer
 docker logs uptime-kuma
 docker logs jellyfin
 docker logs netdata
+docker logs homeassistant
 
 # Check service health
 docker ps --format "table {{.Names}}\t{{.Status}}"
@@ -93,6 +95,14 @@ docker ps --format "table {{.Names}}\t{{.Status}}"
 - **Features**: Docker container monitoring, system metrics, alerts
 - **Cloud**: Optional Netdata Cloud integration with claim token
 
+### Home Assistant
+- **Image**: `ghcr.io/home-assistant/home-assistant:2024.12.0`
+- **Memory**: No limit (moderate usage)
+- **Data**: Configuration stored in named volume `homeassistant_config`
+- **Network**: Uses privileged mode for device discovery
+- **Features**: Smart home automation, device integration, dashboards
+- **Setup**: Initial configuration wizard on first access
+
 ## Configuration
 
 ### Router DNS Setup
@@ -105,6 +115,7 @@ Suggested monitors to add:
 - Pi-hole: `http://pihole:80` (internal network)
 - Portainer: `http://portainer:9000`
 - Netdata: `http://netdata:19999`
+- Home Assistant: `http://homeassistant:8123`
 - Router: `http://192.168.1.1` (adjust to your router IP)
 - Internet: `https://1.1.1.1`
 
@@ -181,6 +192,8 @@ pi-server-config/
 │   └── docker-compose.yml      # Jellyfin media server
 ├── netdata/
 │   └── docker-compose.yml      # Netdata monitoring
+├── homeassistant/
+│   └── docker-compose.yml      # Home Assistant automation
 └── scripts/
     ├── setup.sh                 # Initial system setup
     ├── deploy.sh                # Deploy all services

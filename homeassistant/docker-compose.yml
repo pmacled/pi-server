@@ -1,0 +1,39 @@
+services:
+  homeassistant:
+    image: ghcr.io/home-assistant/home-assistant:2024.12.0
+    container_name: homeassistant
+    restart: unless-stopped
+    networks:
+      - pi-server
+    ports:
+      - "8123:8123"
+    environment:
+      - TZ=${TIMEZONE}
+    volumes:
+      - homeassistant_config:/config
+      - /etc/localtime:/etc/localtime:ro
+      # Enable discovery of devices on the local network
+      - /run/dbus:/run/dbus:ro
+    privileged: true
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8123"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    labels:
+      - "project=pi-server"
+      - "service=homeassistant"
+      - "description=Smart home automation platform"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  homeassistant_config:
+
+networks:
+  pi-server:
+    external: true
