@@ -28,7 +28,7 @@ nano .env  # Set TIMEZONE, PIHOLE_PASSWORD, and optional API keys
 | Pi-hole | `http://PI_IP:8080/admin` | Network-wide ad blocking |
 | Uptime Kuma | `http://PI_IP:3001` | Service monitoring |
 | Jellyfin | `http://PI_IP:8096` | Media server for movies, TV shows, and music |
-| dizqueTV | `http://PI_IP:8000` | Create live TV channels from media library |
+| ErsatzTV | `http://PI_IP:8409` | Create live TV channels from media library |
 | Netdata | `http://PI_IP:19999` | Real-time performance and health monitoring |
 | Home Assistant | `http://PI_IP:8123` | Smart home automation platform |
 
@@ -58,7 +58,7 @@ docker logs pihole
 docker logs portainer
 docker logs uptime-kuma
 docker logs jellyfin
-docker logs dizquetv
+docker logs ersatztv
 docker logs netdata
 docker logs homeassistant
 
@@ -92,14 +92,15 @@ docker ps --format "table {{.Names}}\t{{.Status}}"
 - **Media**: Requires SSD mounted at `/mnt/media/`
 - **Hardware**: GPU transcoding enabled for Raspberry Pi
 
-### dizqueTV
-- **Image**: `vexorian/dizquetv:latest`
-- **Memory**: No limit (lightweight)
-- **Data**: Configuration stored in `./dizquetv/data/`
+### ErsatzTV
+- **Image**: `jasongdove/ersatztv:latest`
+- **Memory**: No limit (moderate usage)
+- **Data**: Configuration stored in `./ersatztv/data/`
 - **Features**: Create live TV channels from Jellyfin media library
-- **Integration**: Connect to Jellyfin to build channel lineups with EPG
-- **Output**: M3U playlist and XMLTV guide for IPTV players
-- **Compatibility**: Works with Jellyfin, Plex, Emby as sources
+- **Integration**: Connect to Jellyfin or Plex to build channel lineups with EPG
+- **Output**: M3U playlist and XMLTV guide for IPTV players and streaming
+- **Advanced**: Supports custom channel schedules, filler content, watermarks, intros/outros
+- **Compatibility**: ARM64/Raspberry Pi native support with hardware acceleration
 
 ### Netdata
 - **Image**: `netdata/netdata:v1.47.4`
@@ -217,8 +218,8 @@ pi-server-config/
 │   └── docker-compose.yml      # Uptime Kuma service
 ├── jellyfin/
 │   └── docker-compose.yml      # Jellyfin media server
-├── dizquetv/
-│   └── docker-compose.yml      # dizqueTV live TV channels
+├── ersatztv/
+│   └── docker-compose.yml      # ErsatzTV live TV channels
 ├── netdata/
 │   └── docker-compose.yml      # Netdata monitoring
 ├── homeassistant/

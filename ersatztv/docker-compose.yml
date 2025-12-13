@@ -1,30 +1,30 @@
 services:
-  dizquetv:
-    image: vexorian/dizquetv:latest
-    container_name: dizquetv
+  ersatztv:
+    image: jasongdove/ersatztv:latest
+    container_name: ersatztv
     restart: unless-stopped
     networks:
       - pi-server
     ports:
-      - "8000:8000"  # Web UI
+      - "8409:8409"  # Web UI and streaming
     environment:
       - TZ=${TIMEZONE}
     volumes:
-      - ./data:/home/node/app/.dizquetv
+      - ./data:/root/.local/share/ersatztv
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000"]
+      test: ["CMD", "curl", "-f", "http://localhost:8409/health"]
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 30s
+      start_period: 40s
     labels:
       - "project=pi-server"
-      - "service=dizquetv"
+      - "service=ersatztv"
       - "description=Create live TV channels from Jellyfin media library"
       - "homepage.group=Media & Entertainment"
-      - "homepage.name=dizqueTV"
-      - "homepage.icon=dizquetv.png"
-      - "homepage.href=http://{{HOMEPAGE_VAR_PI_IP}}:8000"
+      - "homepage.name=ErsatzTV"
+      - "homepage.icon=ersatztv.png"
+      - "homepage.href=http://{{HOMEPAGE_VAR_PI_IP}}:8409"
       - "homepage.description=Live TV channels from media library"
     logging:
       driver: "json-file"

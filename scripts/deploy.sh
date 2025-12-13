@@ -59,8 +59,8 @@ cd jellyfin
 docker compose --env-file ../.env up -d
 cd ..
 
-echo "📺 Deploying dizqueTV..."
-cd dizquetv
+echo "📺 Deploying ErsatzTV..."
+cd ersatztv
 docker compose --env-file ../.env up -d
 cd ..
 
@@ -87,7 +87,7 @@ sleep 15
 # Show status
 echo ""
 echo "📋 Service Status:"
-docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}" | grep -E "NAMES|homepage|portainer|pihole|uptime-kuma|jellyfin|dizquetv|netdata|homeassistant"
+docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}" | grep -E "NAMES|homepage|portainer|pihole|uptime-kuma|jellyfin|ersatztv|netdata|homeassistant"
 
 echo ""
 echo "✅ Deployment complete!"
@@ -98,7 +98,7 @@ echo "   Portainer:      http://$PI_IP:9000"
 echo "   Pi-hole:        http://$PI_IP:8080/admin"
 echo "   Uptime Kuma:    http://$PI_IP:3001"
 echo "   Jellyfin:       http://$PI_IP:8096"
-echo "   dizqueTV:       http://$PI_IP:8000"
+echo "   ErsatzTV:       http://$PI_IP:8409"
 echo "   Netdata:        http://$PI_IP:19999"
 echo "   Home Assistant: http://$PI_IP:8123"
 echo ""
