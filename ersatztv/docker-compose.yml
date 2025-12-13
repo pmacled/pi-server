@@ -1,6 +1,6 @@
 services:
   ersatztv:
-    image: jasongdove/ersatztv:latest
+    image: jasongdove/ersatztv:v25.8.0
     container_name: ersatztv
     restart: unless-stopped
     networks:
@@ -9,7 +9,6 @@ services:
       - "8409:8409"  # Web UI and streaming
     environment:
       - TZ=${TIMEZONE}
-      - HostOptions__BackgroundServiceExceptionBehavior=Ignore
     volumes:
       - ./data:/root/.local/share/ersatztv
     healthcheck:
