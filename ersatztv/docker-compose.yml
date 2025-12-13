@@ -9,8 +9,7 @@ services:
       - "8409:8409"  # Web UI and streaming
     environment:
       - TZ=${TIMEZONE}
-      - DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
-      - ETV_DISABLE_NVENC=true
+      - HostOptions__BackgroundServiceExceptionBehavior=Ignore
     volumes:
       - ./data:/root/.local/share/ersatztv
     healthcheck:
