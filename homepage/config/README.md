@@ -22,10 +22,37 @@ Feel free to edit these files to customize your dashboard:
 - Modify widget layout in `widgets.yaml`
 - Override auto-discovered services in `services.yaml`
 
-## API Keys
+## Environment Variables
 
-Some widgets require API keys (Jellyfin, Home Assistant, etc.). You can:
-1. Add them directly to the docker-compose labels
-2. Use environment variables in your `.env` file (e.g., `HOMEPAGE_VAR_JELLYFIN_KEY`)
+Homepage uses template variables in the format `{{HOMEPAGE_VAR_*}}` that are replaced at runtime. These are set via environment variables in the homepage docker-compose.yml:
+
+- `HOMEPAGE_VAR_PI_IP`: Your Pi's IP address (auto-populated from `PI_IP` in .env)
+- `HOMEPAGE_VAR_PIHOLE_KEY`: Pi-hole API key for widget (optional)
+- `HOMEPAGE_VAR_HOMEASSISTANT_KEY`: Home Assistant long-lived access token (optional)
+- `HOMEPAGE_VAR_JELLYFIN_KEY`: Jellyfin API key for widget (optional)
+- `HOMEPAGE_VAR_PORTAINER_KEY`: Portainer API key for widget (optional)
+
+## API Keys Setup
+
+To enable Homepage widgets with live data:
+
+1. **Add keys to your `.env` file**:
+   ```bash
+   PIHOLE_API_KEY=your_key_here
+   HOMEASSISTANT_API_KEY=your_token_here
+   JELLYFIN_API_KEY=your_key_here
+   PORTAINER_API_KEY=your_key_here
+   ```
+
+2. **How to get API keys**:
+   - **Pi-hole**: Settings → API → Show API token
+   - **Home Assistant**: Profile → Security → Long-Lived Access Tokens → Create Token
+   - **Jellyfin**: Dashboard → Advanced → API Keys → New API Key
+   - **Portainer**: Account settings → Access tokens → Add access token
+
+3. **Redeploy Homepage**:
+   ```bash
+   cd homepage && docker compose down && docker compose up -d
+   ```
 
 See https://gethomepage.dev for full documentation.

@@ -12,7 +12,8 @@ chmod +x scripts/*.sh
 
 # 2. Configure
 cp .env.example .env
-nano .env  # Set TIMEZONE and generate PIHOLE_PASSWORD
+nano .env  # Set TIMEZONE, PIHOLE_PASSWORD, and optional API keys
+# Note: PI_IP is auto-detected, but can be overridden in .env
 
 # 3. Deploy
 ./scripts/deploy.sh
@@ -108,10 +109,13 @@ docker ps --format "table {{.Names}}\t{{.Status}}"
 ### Homepage
 - **Image**: `ghcr.io/gethomepage/homepage:latest`
 - **Memory**: No limit (minimal usage)
-- **Data**: Configuration stored in named volume `homepage_config`
+- **Data**: Configuration in `./homepage/config/`
 - **Features**: Modern dashboard for all services, Docker integration, service status
-- **Auto-discovery**: Automatically detects Docker containers on the pi-server network
-- **Setup**: Configure services in the web interface or via config files
+- **Auto-discovery**: Automatically detects Docker containers on the pi-server network via Docker labels
+- **Environment Variables**: Uses `HOMEPAGE_VAR_*` variables for template substitution
+  - `HOMEPAGE_VAR_PI_IP`: Auto-populated from `PI_IP` for service URLs
+  - Optional API keys for widgets: `PIHOLE_API_KEY`, `HOMEASSISTANT_API_KEY`, `JELLYFIN_API_KEY`, `PORTAINER_API_KEY`
+- **Setup**: Services auto-discovered from Docker labels; customize in `homepage/config/` files
 
 ## Configuration
 
