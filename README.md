@@ -22,6 +22,7 @@ nano .env  # Set TIMEZONE and generate PIHOLE_PASSWORD
 
 | Service | URL | Purpose |
 |---------|-----|---------|
+| Homepage | `http://PI_IP:3000` | Dashboard for all services |
 | Portainer | `http://PI_IP:9000` | Docker container management |
 | Pi-hole | `http://PI_IP:8080/admin` | Network-wide ad blocking |
 | Uptime Kuma | `http://PI_IP:3001` | Service monitoring |
@@ -50,6 +51,7 @@ nano .env  # Set TIMEZONE and generate PIHOLE_PASSWORD
 ./scripts/update.sh
 
 # View logs
+docker logs homepage
 docker logs pihole
 docker logs portainer
 docker logs uptime-kuma
@@ -102,6 +104,14 @@ docker ps --format "table {{.Names}}\t{{.Status}}"
 - **Network**: Uses privileged mode for device discovery
 - **Features**: Smart home automation, device integration, dashboards
 - **Setup**: Initial configuration wizard on first access
+
+### Homepage
+- **Image**: `ghcr.io/gethomepage/homepage:latest`
+- **Memory**: No limit (minimal usage)
+- **Data**: Configuration stored in named volume `homepage_config`
+- **Features**: Modern dashboard for all services, Docker integration, service status
+- **Auto-discovery**: Automatically detects Docker containers on the pi-server network
+- **Setup**: Configure services in the web interface or via config files
 
 ## Configuration
 
@@ -182,6 +192,8 @@ pi-server-config/
 ├── .env.example                 # Template for configuration
 ├── .gitignore                   # Excludes sensitive data
 ├── docker-compose.yml           # Shared network definition
+├── homepage/
+│   └── docker-compose.yml      # Homepage dashboard
 ├── pihole/
 │   └── docker-compose.yml      # Pi-hole service
 ├── portainer/

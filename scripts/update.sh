@@ -4,6 +4,7 @@ set -e
 echo "Updating Pi Server services..."
 
 # Pull latest images
+cd homepage && docker compose --env-file ../.env pull && cd ..
 cd portainer && docker compose --env-file ../.env pull && cd ..
 cd pihole && docker compose --env-file ../.env pull && cd ..
 cd uptime-kuma && docker compose --env-file ../.env pull && cd ..

@@ -55,6 +55,11 @@ cd homeassistant
 docker compose --env-file ../.env up -d
 cd ..
 
+echo "🏡 Deploying Homepage..."
+cd homepage
+docker compose --env-file ../.env up -d
+cd ..
+
 # Wait for services to start
 echo ""
 echo "⏳ Waiting for services to become healthy..."
@@ -63,7 +68,7 @@ sleep 15
 # Show status
 echo ""
 echo "📋 Service Status:"
-docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}" | grep -E "NAMES|portainer|pihole|uptime-kuma|jellyfin|netdata|homeassistant"
+docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}" | grep -E "NAMES|homepage|portainer|pihole|uptime-kuma|jellyfin|netdata|homeassistant"
 
 # Get IP address
 PI_IP=$(hostname -I | awk '{print $1}')
@@ -72,6 +77,7 @@ echo ""
 echo "✅ Deployment complete!"
 echo ""
 echo "🌐 Access your services:"
+echo "   Homepage:       http://$PI_IP:3000"
 echo "   Portainer:      http://$PI_IP:9000"
 echo "   Pi-hole:        http://$PI_IP:8080/admin"
 echo "   Uptime Kuma:    http://$PI_IP:3001"
