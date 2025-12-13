@@ -1,7 +1,7 @@
 services:
-  tunarr:
-    image: chrisbenincasa/tunarr:latest-arm64
-    container_name: tunarr
+  dizquetv:
+    image: vexorian/dizquetv:latest
+    container_name: dizquetv
     restart: unless-stopped
     networks:
       - pi-server
@@ -9,24 +9,23 @@ services:
       - "8000:8000"  # Web UI
     environment:
       - TZ=${TIMEZONE}
-      - TUNARR_DISABLE_SEARCH=true
     volumes:
-      - ./data:/config
+      - ./data:/home/node/app/.dizquetv
     healthcheck:
-      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8000/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:8000"]
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 45s
+      start_period: 30s
     labels:
       - "project=pi-server"
-      - "service=tunarr"
-      - "description=Create live TV channels from Jellyfin/Plex/Emby libraries"
+      - "service=dizquetv"
+      - "description=Create live TV channels from Jellyfin media library"
       - "homepage.group=Media & Entertainment"
-      - "homepage.name=Tunarr"
-      - "homepage.icon=tunarr.png"
+      - "homepage.name=dizqueTV"
+      - "homepage.icon=dizquetv.png"
       - "homepage.href=http://{{HOMEPAGE_VAR_PI_IP}}:8000"
-      - "homepage.description=Live TV channels from media libraries"
+      - "homepage.description=Live TV channels from media library"
     logging:
       driver: "json-file"
       options:
