@@ -9,6 +9,7 @@ cd portainer && docker compose --env-file ../.env pull && cd ..
 cd pihole && docker compose --env-file ../.env pull && cd ..
 cd uptime-kuma && docker compose --env-file ../.env pull && cd ..
 cd jellyfin && docker compose --env-file ../.env pull && cd ..
+cd tunarr && docker compose --env-file ../.env pull && cd ..
 cd netdata && docker compose --env-file ../.env pull && cd ..
 cd homeassistant && docker compose --env-file ../.env pull && cd ..
 

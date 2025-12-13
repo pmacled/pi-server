@@ -1,0 +1,44 @@
+services:
+  tunarr:
+    image: chrisbenincasa/tunarr:latest
+    container_name: tunarr
+    restart: unless-stopped
+    networks:
+      - pi-server
+    ports:
+      - "8000:8000"  # Web UI
+    environment:
+      - TZ=${TIMEZONE}
+    volumes:
+      - tunarr_data:/config
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 45s
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+    labels:
+      - "project=pi-server"
+      - "service=tunarr"
+      - "description=Create live TV channels from Jellyfin/Plex/Emby libraries"
+      - "homepage.group=Media & Entertainment"
+      - "homepage.name=Tunarr"
+      - "homepage.icon=tunarr.png"
+      - "homepage.href=http://{{HOMEPAGE_VAR_PI_IP}}:8000"
+      - "homepage.description=Live TV channels from media libraries"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  tunarr_data:
+
+networks:
+  pi-server:
+    external: true

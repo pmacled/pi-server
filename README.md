@@ -28,6 +28,7 @@ nano .env  # Set TIMEZONE, PIHOLE_PASSWORD, and optional API keys
 | Pi-hole | `http://PI_IP:8080/admin` | Network-wide ad blocking |
 | Uptime Kuma | `http://PI_IP:3001` | Service monitoring |
 | Jellyfin | `http://PI_IP:8096` | Media server for movies, TV shows, and music |
+| Tunarr | `http://PI_IP:8000` | Create live TV channels from media libraries |
 | Netdata | `http://PI_IP:19999` | Real-time performance and health monitoring |
 | Home Assistant | `http://PI_IP:8123` | Smart home automation platform |
 
@@ -57,6 +58,7 @@ docker logs pihole
 docker logs portainer
 docker logs uptime-kuma
 docker logs jellyfin
+docker logs tunarr
 docker logs netdata
 docker logs homeassistant
 
@@ -89,6 +91,15 @@ docker ps --format "table {{.Names}}\t{{.Status}}"
 - **Data**: Config and cache in named volumes
 - **Media**: Requires SSD mounted at `/mnt/media/`
 - **Hardware**: GPU transcoding enabled for Raspberry Pi
+
+### Tunarr
+- **Image**: `chrisbenincasa/tunarr:latest`
+- **Memory**: 1GB limit
+- **Data**: Stored in named volume `tunarr_data`
+- **Features**: Create live TV channels from Jellyfin/Plex/Emby media libraries
+- **Integration**: Connect to Jellyfin to build custom channel lineups with EPG
+- **Output**: M3U playlist, XMLTV guide, and HDHomeRun spoofing for IPTV players
+- **UI**: Modern web interface with dark mode, browser streaming, and advanced scheduling
 
 ### Netdata
 - **Image**: `netdata/netdata:v1.47.4`
@@ -206,6 +217,8 @@ pi-server-config/
 │   └── docker-compose.yml      # Uptime Kuma service
 ├── jellyfin/
 │   └── docker-compose.yml      # Jellyfin media server
+├── tunarr/
+│   └── docker-compose.yml      # Tunarr live TV channels
 ├── netdata/
 │   └── docker-compose.yml      # Netdata monitoring
 ├── homeassistant/
