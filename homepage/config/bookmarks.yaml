@@ -7,7 +7,7 @@
 
 - Documentation:
     - Homepage Docs:
-        - icon: https://gethomepage.dev/img/banner_light@2x.png
+        - icon: homepage.png
           href: https://gethomepage.dev/
           description: Homepage documentation
     - Docker Docs:
