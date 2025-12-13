@@ -33,6 +33,7 @@ services:
       - "homepage.description=Network-wide ad blocking DNS"
       - "homepage.widget.type=pihole"
       - "homepage.widget.url=http://pihole:80"
+      - "homepage.widget.key={{HOMEPAGE_VAR_PIHOLE_KEY}}"
     logging:
       driver: "json-file"
       options:
