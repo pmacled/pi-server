@@ -1,6 +1,6 @@
 services:
   tunarr:
-    image: chrisbenincasa/tunarr:latest
+    image: chrisbenincasa/tunarr:latest-arm64
     container_name: tunarr
     restart: unless-stopped
     networks:
