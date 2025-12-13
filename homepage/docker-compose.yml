@@ -11,6 +11,9 @@ services:
       - TZ=${TIMEZONE}
       - PUID=1000
       - PGID=1000
+      - HOMEPAGE_VAR_TITLE=Pi Server
+      - HOMEPAGE_VAR_SEARCH_PROVIDER=google
+      - LOG_TARGETS=stdout
     volumes:
       - homepage_config:/app/config
       - /var/run/docker.sock:/var/run/docker.sock:ro
