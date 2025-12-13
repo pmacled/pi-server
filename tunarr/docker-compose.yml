@@ -9,6 +9,7 @@ services:
       - "8000:8000"  # Web UI
     environment:
       - TZ=${TIMEZONE}
+      - TUNARR_DISABLE_SEARCH=true
     volumes:
       - tunarr_data:/config
     healthcheck:
@@ -20,7 +21,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 1G
+          memory: 512M
     labels:
       - "project=pi-server"
       - "service=tunarr"
