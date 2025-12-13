@@ -9,10 +9,6 @@ services:
       - "3000:3000"
     environment:
       - TZ=${TIMEZONE}
-      - PUID=1000
-      - PGID=1000
-      - HOMEPAGE_VAR_TITLE=Pi Server
-      - HOMEPAGE_VAR_SEARCH_PROVIDER=google
       - LOG_TARGETS=stdout
       - HOMEPAGE_ALLOWED_HOSTS=${PI_IP}:3000
     volumes:
