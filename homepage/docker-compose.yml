@@ -14,7 +14,7 @@ services:
       - HOMEPAGE_VAR_TITLE=Pi Server
       - HOMEPAGE_VAR_SEARCH_PROVIDER=google
       - LOG_TARGETS=stdout
-      - HOMEPAGE_ALLOWED_HOSTS=${PI_IP}
+      - HOMEPAGE_ALLOWED_HOSTS=${PI_IP}:3000
     volumes:
       - homepage_config:/app/config
       - /var/run/docker.sock:/var/run/docker.sock:ro
