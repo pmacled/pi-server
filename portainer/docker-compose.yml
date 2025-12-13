@@ -26,6 +26,7 @@ services:
       - "homepage.description=Docker container management"
       - "homepage.widget.type=portainer"
       - "homepage.widget.url=http://portainer:9000"
+      - "homepage.widget.env={{HOMEPAGE_VAR_PORTAINER_ENV:-2}}"
       - "homepage.widget.key={{HOMEPAGE_VAR_PORTAINER_KEY}}"
     logging:
       driver: "json-file"

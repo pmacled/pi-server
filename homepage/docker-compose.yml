@@ -16,6 +16,7 @@ services:
       - HOMEPAGE_VAR_HOMEASSISTANT_KEY=${HOMEASSISTANT_API_KEY:-}
       - HOMEPAGE_VAR_JELLYFIN_KEY=${JELLYFIN_API_KEY:-}
       - HOMEPAGE_VAR_PORTAINER_KEY=${PORTAINER_API_KEY:-}
+      - HOMEPAGE_VAR_PORTAINER_ENV=${PORTAINER_ENV:-2}
     volumes:
       - ./config:/app/config
       - /var/run/docker.sock:/var/run/docker.sock:ro
