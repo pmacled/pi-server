@@ -25,6 +25,14 @@ services:
       - "project=pi-server"
       - "service=homeassistant"
       - "description=Smart home automation platform"
+      - "homepage.group=Network & Infrastructure"
+      - "homepage.name=Home Assistant"
+      - "homepage.icon=home-assistant.png"
+      - "homepage.href=http://{{HOMEPAGE_VAR_PI_IP}}:8123"
+      - "homepage.description=Smart home automation"
+      - "homepage.widget.type=homeassistant"
+      - "homepage.widget.url=http://homeassistant:8123"
+      - "homepage.widget.key={{HOMEPAGE_VAR_HOMEASSISTANT_KEY}}"
     logging:
       driver: "json-file"
       options:

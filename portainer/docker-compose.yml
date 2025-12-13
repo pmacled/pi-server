@@ -19,6 +19,14 @@ services:
       - "project=pi-server"
       - "service=portainer"
       - "description=Docker container management UI"
+      - "homepage.group=Monitoring & Management"
+      - "homepage.name=Portainer"
+      - "homepage.icon=portainer.png"
+      - "homepage.href=http://{{HOMEPAGE_VAR_PI_IP}}:9000"
+      - "homepage.description=Docker container management"
+      - "homepage.widget.type=portainer"
+      - "homepage.widget.url=http://portainer:9000"
+      - "homepage.widget.env=1"
     logging:
       driver: "json-file"
       options:

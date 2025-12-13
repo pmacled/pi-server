@@ -39,6 +39,11 @@ services:
       - "project=pi-server"
       - "service=netdata"
       - "description=Real-time performance and health monitoring"
+      - "homepage.group=Monitoring & Management"
+      - "homepage.name=Netdata"
+      - "homepage.icon=netdata.png"
+      - "homepage.href=http://{{HOMEPAGE_VAR_PI_IP}}:19999"
+      - "homepage.description=System performance monitoring"
     logging:
       driver: "json-file"
       options:

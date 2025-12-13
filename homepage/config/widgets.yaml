@@ -1,0 +1,18 @@
+---
+- logo:
+    icon: https://raw.githubusercontent.com/NX211/homer-icons/master/png/raspberry-pi.png
+
+- greeting:
+    text_size: xl
+    text: Welcome to Pi Server
+
+- datetime:
+    text_size: l
+    format:
+      timeStyle: short
+      dateStyle: short
+
+- resources:
+    cpu: true
+    memory: true
+    disk: /

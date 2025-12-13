@@ -26,6 +26,13 @@ services:
       - "project=pi-server"
       - "service=pihole"
       - "description=Network-wide ad blocking DNS server"
+      - "homepage.group=Network & Infrastructure"
+      - "homepage.name=Pi-hole"
+      - "homepage.icon=pi-hole.png"
+      - "homepage.href=http://{{HOMEPAGE_VAR_PI_IP}}:8080/admin"
+      - "homepage.description=Network-wide ad blocking DNS"
+      - "homepage.widget.type=pihole"
+      - "homepage.widget.url=http://pihole:80"
     logging:
       driver: "json-file"
       options:

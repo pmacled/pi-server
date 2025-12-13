@@ -16,7 +16,7 @@ services:
       - LOG_TARGETS=stdout
       - HOMEPAGE_ALLOWED_HOSTS=${PI_IP}:3000
     volumes:
-      - homepage_config:/app/config
+      - ./config:/app/config
       - /var/run/docker.sock:/var/run/docker.sock:ro
     healthcheck:
       test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000"]
@@ -33,9 +33,6 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
-
-volumes:
-  homepage_config:
 
 networks:
   pi-server:

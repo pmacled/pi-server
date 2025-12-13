@@ -35,6 +35,14 @@ services:
       - "project=pi-server"
       - "service=jellyfin"
       - "description=Free media server for movies, TV shows, and music"
+      - "homepage.group=Media & Entertainment"
+      - "homepage.name=Jellyfin"
+      - "homepage.icon=jellyfin.png"
+      - "homepage.href=http://{{HOMEPAGE_VAR_PI_IP}}:8096"
+      - "homepage.description=Media server for movies & TV"
+      - "homepage.widget.type=jellyfin"
+      - "homepage.widget.url=http://jellyfin:8096"
+      - "homepage.widget.key={{HOMEPAGE_VAR_JELLYFIN_KEY}}"
     logging:
       driver: "json-file"
       options:

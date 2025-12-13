@@ -1,0 +1,16 @@
+---
+- Network:
+    - Router:
+        - icon: router.png
+          href: http://192.168.1.1
+          description: Network router admin
+
+- Documentation:
+    - Homepage Docs:
+        - icon: https://gethomepage.dev/img/banner_light@2x.png
+          href: https://gethomepage.dev/
+          description: Homepage documentation
+    - Docker Docs:
+        - icon: docker.png
+          href: https://docs.docker.com/
+          description: Docker documentation

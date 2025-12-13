@@ -19,6 +19,11 @@ services:
       - "project=pi-server"
       - "service=uptime-kuma"
       - "description=Uptime monitoring and status page"
+      - "homepage.group=Monitoring & Management"
+      - "homepage.name=Uptime Kuma"
+      - "homepage.icon=uptime-kuma.png"
+      - "homepage.href=http://{{HOMEPAGE_VAR_PI_IP}}:3001"
+      - "homepage.description=Service uptime monitoring"
     logging:
       driver: "json-file"
       options:

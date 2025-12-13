@@ -1,0 +1,26 @@
+---
+title: Pi Server Dashboard
+
+theme: dark
+color: slate
+
+layout:
+  Network & Infrastructure:
+    style: row
+    columns: 3
+  Media & Entertainment:
+    style: row
+    columns: 3
+  Monitoring & Management:
+    style: row
+    columns: 3
+
+headerStyle: boxed
+statusStyle: dot
+showStats: true
+target: _blank
+
+quicklaunch:
+  searchDescriptions: true
+  hideInternetSearch: false
+  provider: duckduckgo

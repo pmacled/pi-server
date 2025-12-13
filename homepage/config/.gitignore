@@ -1,0 +1,7 @@
+# Ignore any custom images or assets users add
+images/
+icons/
+
+# Ignore log files if any
+*.log
+logs/
