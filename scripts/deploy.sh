@@ -19,6 +19,11 @@ if [ -z "$PIHOLE_PASSWORD" ]; then
     exit 1
 fi
 
+# Get IP address (allow override from .env)
+if [ -z "$PI_IP" ]; then
+    PI_IP=$(hostname -I | awk '{print $1}')
+fi
+
 # Create shared network
 echo "📡 Creating shared network..."
 docker network create pi-server 2>/dev/null || echo "✅ Network 'pi-server' already exists"
@@ -69,9 +74,6 @@ sleep 15
 echo ""
 echo "📋 Service Status:"
 docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}" | grep -E "NAMES|homepage|portainer|pihole|uptime-kuma|jellyfin|netdata|homeassistant"
-
-# Get IP address
-PI_IP=$(hostname -I | awk '{print $1}')
 
 echo ""
 echo "✅ Deployment complete!"
