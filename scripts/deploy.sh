@@ -22,6 +22,15 @@ fi
 # Get IP address (allow override from .env)
 if [ -z "$PI_IP" ]; then
     PI_IP=$(hostname -I | awk '{print $1}')
+    echo "🔍 Detected IP address: $PI_IP"
+    # Add/update PI_IP in .env file
+    if grep -q "^PI_IP=" .env; then
+        # Update existing PI_IP
+        sed -i "s|^PI_IP=.*|PI_IP=$PI_IP|" .env
+    else
+        # Add PI_IP if not present
+        echo "PI_IP=$PI_IP" >> .env
+    fi
 fi
 
 # Create shared network
