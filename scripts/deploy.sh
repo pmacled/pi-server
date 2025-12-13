@@ -57,7 +57,7 @@ cd ..
 
 echo "🏡 Deploying Homepage..."
 cd homepage
-docker compose --env-file ../.env up -d
+PI_IP=$PI_IP docker compose --env-file ../.env up -d
 cd ..
 
 # Wait for services to start
